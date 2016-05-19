@@ -22,7 +22,7 @@ public class MyReactPackager implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> viewManagers = new ArrayList<>();
         viewManagers.add(new ToastModule(reactContext));
-        return Collections.emptyList();
+        return viewManagers;
     }
 
     @Override
