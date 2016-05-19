@@ -35,7 +35,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new MyReactPackager() //
+            new MyReactPackager() // 这是我们自定义的ReactPackager
         );
     }
 }

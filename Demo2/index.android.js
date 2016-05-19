@@ -25,10 +25,10 @@ class Demo2 extends Component {
       </View>
     );
   }
-}
-
-function onPressButton() {
-  ToastAndroid.show('Awesome', ToastAndroid.SHORT);
+  
+  onPressButton() {
+    ToastAndroid.show('Test Toast', ToastAndroid.SHORT);
+  }
 }
 
 const styles = StyleSheet.create({

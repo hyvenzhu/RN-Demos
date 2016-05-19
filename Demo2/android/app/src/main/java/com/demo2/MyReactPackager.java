@@ -27,11 +27,11 @@ public class MyReactPackager implements ReactPackage {
 
     @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
-        return null;
+        return Collections.emptyList(); // 返回null会报错
     }
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return null;
+        return Collections.emptyList(); // 返回null会报错
     }
 }
