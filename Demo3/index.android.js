@@ -2,27 +2,57 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
+var CallbackAndroid = require('./CallbackAndroid');
 
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 
 class Demo3 extends Component {
+  // es6语法，如果使用React.createClass则使用getInitialState
+  constructor () {
+    super();
+    this.state = {
+      result: ''
+    }
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
+        <TouchableOpacity onPress={()=>{
+            CallbackAndroid.testCallback((msg)=>{
+              this.setState({result: msg});
+            });
+          }}>
+          <Text style={styles.welcome}>
+            Callback1ssss
+          </Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity onPress={()=>{
+            try {
+              var {
+                msg
+              } = await CallbackAndroid.testPromise();
+              
+              this.setState({result: msg});
+            } catch (error) {
+              console.log(error);
+            }
+          }}>
+          <Text style={styles.welcome}>
+            Promise
+          </Text>
+        </TouchableOpacity>
+        
         <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
+          {this.state.result}
         </Text>
       </View>
     );

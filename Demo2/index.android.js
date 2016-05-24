@@ -2,7 +2,7 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
-var ToastAndroid = require('ToastAndroid');
+var ToastAndroid = require('./ToastAndroid');
 
 import React, { Component } from 'react';
 import {
