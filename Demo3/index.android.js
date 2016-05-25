@@ -10,7 +10,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  ToastAndroid
 } from 'react-native';
 
 class Demo3 extends Component {
@@ -31,20 +32,12 @@ class Demo3 extends Component {
             });
           }}>
           <Text style={styles.welcome}>
-            Callback1ssss
+            Callback
           </Text>
         </TouchableOpacity>
         
         <TouchableOpacity onPress={()=>{
-            try {
-              var {
-                msg
-              } = await CallbackAndroid.testPromise();
-              
-              this.setState({result: msg});
-            } catch (error) {
-              console.log(error);
-            }
+            this.promise();
           }}>
           <Text style={styles.welcome}>
             Promise
@@ -56,6 +49,20 @@ class Demo3 extends Component {
         </Text>
       </View>
     );
+  }
+  
+  // es7语法，Promise必须配合async使用
+  async promise()
+  {
+    try {
+      var {
+        msg
+      } = await CallbackAndroid.testPromise();
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+      this.setState({result: msg});
+    } catch (error) {
+      
+    }
   }
 }
 
