@@ -2,7 +2,7 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
-var CallbackAndroid = require('./CallbackAndroid');
+var NativeAndroid = require('./NativeAndroid');
 
 import React, { Component } from 'react';
 import {
@@ -11,7 +11,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ToastAndroid
+  ToastAndroid,
+  DeviceEventEmitter
 } from 'react-native';
 
 class Demo3 extends Component {
@@ -23,11 +24,18 @@ class Demo3 extends Component {
     }
   }
   
+  componentWillMount()
+  {
+     DeviceEventEmitter.addListener('testEvent', (msg) => {
+       this.setState({result: msg});
+     });
+  }
+  
   render() {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={()=>{
-            CallbackAndroid.testCallback((msg)=>{
+            NativeAndroid.testCallback((msg)=>{
               this.setState({result: msg});
             });
           }}>
@@ -44,6 +52,14 @@ class Demo3 extends Component {
           </Text>
         </TouchableOpacity>
         
+        <TouchableOpacity onPress={()=>{
+            NativeAndroid.testEvent();
+          }}>
+          <Text style={styles.welcome}>
+            Event
+          </Text>
+        </TouchableOpacity>
+        
         <Text style={styles.instructions}>
           {this.state.result}
         </Text>
@@ -57,11 +73,10 @@ class Demo3 extends Component {
     try {
       var {
         msg
-      } = await CallbackAndroid.testPromise();
-      ToastAndroid.show(msg, ToastAndroid.SHORT);
+      } = await NativeAndroid.testPromise();
       this.setState({result: msg});
     } catch (error) {
-      
+      console.log(error);
     }
   }
 }

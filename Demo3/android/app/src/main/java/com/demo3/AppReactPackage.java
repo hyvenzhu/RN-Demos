@@ -2,7 +2,6 @@ package com.demo3;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
-import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
@@ -17,9 +16,9 @@ import java.util.List;
  */
 public class AppReactPackage implements ReactPackage {
     @Override
-    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        List<NativeModule> nativeModules = new ArrayList<>();
-        nativeModules.add(new CallbackModule(reactContext));
+    public List<com.facebook.react.bridge.NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+        List<com.facebook.react.bridge.NativeModule> nativeModules = new ArrayList<>();
+        nativeModules.add(new NativeModule(reactContext));
         return nativeModules;
     }
 
