@@ -11,14 +11,34 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  ToastAndroid,
 } from 'react-native';
+
+// class Demo4 extends Component {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <SwipeMenuListView style={styles.listView} array={["Java", "C", "C++", "C#", "Python", "PHP"
+//                   , "Visual Basic .NET", "JavaScript", "Assembly Language", "Ruby", "Perl"
+//                   , "Delphi", "Visual Basic", "Swift", "MATLAB", "Pascal"]}>
+//         </SwipeMenuListView>
+//       </View>
+//     );
+//   }
+// }
 
 class Demo4 extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SwipeMenuListView style={styles.listView}>
+        <SwipeMenuListView style={styles.listView} array={["Java", "C", "C++", "C#", "Python", "PHP"
+                  , "Visual Basic .NET", "JavaScript", "Assembly Language", "Ruby", "Perl"
+                  , "Delphi", "Visual Basic", "Swift", "MATLAB", "Pascal"]} 
+                  onDelete={(event)=>{
+                       ToastAndroid.show(event.nativeEvent.language, ToastAndroid.SHORT);
+                    }
+                  }>
         </SwipeMenuListView>
       </View>
     );

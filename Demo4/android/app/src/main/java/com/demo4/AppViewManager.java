@@ -3,15 +3,21 @@ package com.demo4;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +29,8 @@ import java.util.Map;
  * @version [android, 2016-05-30 21:43]
  */
 public class AppViewManager extends SimpleViewManager<SwipeMenuListView> {
+    SimpleAdapter adapter;
+    private Context mContext;
     @Override
     public String getName() {
         return "SwipeMenuListView";
@@ -30,13 +38,31 @@ public class AppViewManager extends SimpleViewManager<SwipeMenuListView> {
 
     @Override
     protected SwipeMenuListView createViewInstance(final ThemedReactContext reactContext) {
-        SwipeMenuListView swipeMenuListView = new SwipeMenuListView(reactContext);
+        mContext = reactContext;
+
+        final SwipeMenuListView swipeMenuListView = new SwipeMenuListView(reactContext);
 
         // set creator
         swipeMenuListView.setMenuCreator(initMenu(reactContext));
 
-        // 设置适配器
-        setAdapter(swipeMenuListView, reactContext);
+        // bind menu click listener
+        swipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index)
+                {
+                    case 0: // delete menu
+                        WritableMap map = Arguments.createMap();
+                        map.putString("language", adapter.getItem(position).toString());
+                        map.putString("position", String.valueOf(position));
+                        // "topChange"事件在JS端映射到"onChange"，参考UIManagerModuleConstants.java
+                        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(swipeMenuListView.getId()
+                                , "topChange", map);
+                        break;
+                }
+                return true;
+            }
+        });
 
         return swipeMenuListView;
     }
@@ -52,23 +78,6 @@ public class AppViewManager extends SimpleViewManager<SwipeMenuListView> {
 
             @Override
             public void create(SwipeMenu menu) {
-                // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(
-                        context);
-                // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
-                // set item width
-                openItem.setWidth(100);
-                // set item title
-                openItem.setTitle("Open");
-                // set item title fontsize
-                openItem.setTitleSize(18);
-                // set item title font color
-                openItem.setTitleColor(Color.WHITE);
-                // add to menu
-                menu.addMenuItem(openItem);
-
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
                         context);
@@ -87,22 +96,22 @@ public class AppViewManager extends SimpleViewManager<SwipeMenuListView> {
     }
 
     /**
-     * 初始化默认数据
-     * @param listView
-     * @param context
+     * 导出属性"array"给JS模块调用
+     * @param swipeMenuListView
+     * @param array
      */
-    void setAdapter(ListView listView, Context context)
+    @ReactProp(name = "array")
+    public void setDataSource(SwipeMenuListView swipeMenuListView, ReadableArray array)
     {
-        String[] strs = new String[]{"Java", "Objective-C", "C", "C++", "Ruby", "Python", "C#", "Swift", "JavaScript"
-                , "Go"};
         List<Map<String, String>> list = new ArrayList<>();
-        for(String str : strs)
+        for(int i = 0; i < array.size(); i++)
         {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("desc", str);
+            map.put("desc", array.getString(i));
             list.add(map);
         }
-        listView.setAdapter(new SimpleAdapter(context, list,
-                R.layout.layout_item, new String[]{"desc"}, new int[]{R.id.tv_desc}));
+        adapter = new SimpleAdapter(mContext, list,
+                R.layout.layout_item, new String[]{"desc"}, new int[]{R.id.tv_desc});
+        swipeMenuListView.setAdapter(adapter);
     }
 }
