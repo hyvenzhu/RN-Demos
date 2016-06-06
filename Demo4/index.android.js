@@ -15,6 +15,7 @@ import {
   ToastAndroid,
 } from 'react-native';
 
+// 仅数据展示
 // class Demo4 extends Component {
 //   render() {
 //     return (
@@ -28,6 +29,7 @@ import {
 //   }
 // }
 
+// 数据展示和事件交互
 class Demo4 extends Component {
   render() {
     return (

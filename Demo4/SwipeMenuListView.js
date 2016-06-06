@@ -1,3 +1,4 @@
+// 仅数据展示
 // 'use strict';
 // var { PropTypes } = require('react');
 // var { requireNativeComponent,View } = require('react-native');
@@ -13,7 +14,7 @@
 // module.exports = requireNativeComponent('SwipeMenuListView', iface);
 
 
-
+// 数据展示和事件交互
 'use strict';
 import React, {Component, PropTypes } from 'react';
 import {requireNativeComponent,View} from 'react-native';
