@@ -3,8 +3,6 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-var SwipeMenuListView = require('./SwipeMenuListView');
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -15,6 +13,8 @@ import {
   ToastAndroid,
 } from 'react-native';
 
+// 仅数据展示
+// var SwipeMenuListView = require('./SwipeMenuListView');
 // class Demo4 extends Component {
 //   render() {
 //     return (
@@ -28,6 +28,8 @@ import {
 //   }
 // }
 
+// 数据展示和事件交互
+var SwipeMenuListView = require('./SwipeMenuListViewComponent');
 class Demo4 extends Component {
   render() {
     return (

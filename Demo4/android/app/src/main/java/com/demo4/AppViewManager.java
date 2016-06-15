@@ -3,14 +3,12 @@ package com.demo4;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.widget.SimpleAdapter;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -19,9 +17,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 原生视图创建和管理类aa
@@ -29,7 +25,8 @@ import java.util.Map;
  * @version [android, 2016-05-30 21:43]
  */
 public class AppViewManager extends SimpleViewManager<SwipeMenuListView> {
-    SimpleAdapter adapter;
+    MyAdapter adapter;
+    List<String> dataSource;
     private Context mContext;
     @Override
     public String getName() {
@@ -52,15 +49,19 @@ public class AppViewManager extends SimpleViewManager<SwipeMenuListView> {
                 switch (index)
                 {
                     case 0: // delete menu
+                        // 删除数据
+                        String language = adapter.getItem(position);
+                        dataSource.remove(position);
+                        adapter.notifyDataSetChanged();
+
                         WritableMap map = Arguments.createMap();
-                        map.putString("language", adapter.getItem(position).toString());
-                        map.putString("position", String.valueOf(position));
+                        map.putString("language", language);
                         // "topChange"事件在JS端映射到"onChange"，参考UIManagerModuleConstants.java
                         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(swipeMenuListView.getId()
                                 , "topChange", map);
                         break;
                 }
-                return true;
+                return false;
             }
         });
 
@@ -103,15 +104,12 @@ public class AppViewManager extends SimpleViewManager<SwipeMenuListView> {
     @ReactProp(name = "array")
     public void setDataSource(SwipeMenuListView swipeMenuListView, ReadableArray array)
     {
-        List<Map<String, String>> list = new ArrayList<>();
+        dataSource = new ArrayList<>();
         for(int i = 0; i < array.size(); i++)
         {
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("desc", array.getString(i));
-            list.add(map);
+            dataSource.add(array.getString(i));
         }
-        adapter = new SimpleAdapter(mContext, list,
-                R.layout.layout_item, new String[]{"desc"}, new int[]{R.id.tv_desc});
+        adapter = new MyAdapter(mContext, dataSource);
         swipeMenuListView.setAdapter(adapter);
     }
 }
