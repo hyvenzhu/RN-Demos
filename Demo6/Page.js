@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
+    backgroundColor: '#FAEBD7',
   }
 });
 

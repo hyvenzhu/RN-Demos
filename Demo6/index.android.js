@@ -7,7 +7,6 @@
 import React, { Component } from 'react';
 import {
     AppRegistry,
-    Text,
     ToastAndroid
 } from 'react-native';
 
@@ -32,9 +31,12 @@ class Demo6 extends Component {
             // float类型 [0, tab数量-1]
             // console.log('scroll position:' + postion);
           }}
-          locked={false}
-          page={2}
           ref='scrollableTabView'
+          tabBarUnderlineColor='#FF0000'
+          tabBarBackgroundColor='#FFFFFF'
+          tabBarActiveTextColor='#9B30FF'
+          tabBarInactiveTextColor='#7A67EE'
+          tabBarTextStyle={{fontSize: 18}}
       >
         <Page tabLabel='Tab1' goToPage={this.goToPage} nextPage={1}/>
         <Page tabLabel='Tab2' goToPage={this.goToPage} nextPage={2}/>
@@ -48,6 +50,7 @@ class Demo6 extends Component {
 
   goToPage(index)
   {
+    // 通过ref拿到真实的dom
     this.refs.scrollableTabView.goToPage(index);
   }
 }
