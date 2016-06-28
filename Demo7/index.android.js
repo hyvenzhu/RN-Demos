@@ -27,8 +27,8 @@ class Demo7 extends Component {
 	}
 
 	render() {
-		const tabNames = this.state.tabNames;
-		const tabIconNames = this.state.tabIconNames;
+		let tabNames = this.state.tabNames;
+		let tabIconNames = this.state.tabIconNames;
 		return (
 			<ScrollableTabView
 				renderTabBar={() => <WeixinTabBar tabNames={tabNames} tabIconNames={tabIconNames}/>}
