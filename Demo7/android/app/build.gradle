@@ -82,8 +82,6 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -128,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules

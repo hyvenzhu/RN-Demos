@@ -14,9 +14,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 class WeixinTabBar extends Component {
 
 	propTypes = {
-		goToPage: React.PropTypes.func,
-		activeTab: React.PropTypes.number,
-		tabs: React.PropTypes.array,
+		goToPage: React.PropTypes.func, // 跳转到对应tab的方法
+    activeTab: React.PropTypes.number, // 当前被选中的tab下标
+    tabs: React.PropTypes.array, // 所有tabs集合
+
+    tabNames: React.PropTypes.array, // 保存Tab名称
+    tabIconNames: React.PropTypes.array, // 保存Tab图标
 	}
 
 	setAnimationValue({value}) {
@@ -24,14 +27,16 @@ class WeixinTabBar extends Component {
 	}
 
 	renderTabOption(tab, i) {
+    const color = this.props.activeTab == i? "#6B8E23" : "#ADADAD"; // 判断i是否是当前选中的tab，设置不同的颜色
 		return (
-			<TouchableOpacity onPress={()=>this.props.goToPage(i)} key={tab} style={styles.tab}>
+			<TouchableOpacity onPress={()=>this.props.goToPage(i)} style={styles.tab}>
 				<View style={styles.tabItem}>
 					<Icon
-						name={tab}
-						size={30}/>
-					<Text>
-						{tab.tabName}
+						name={this.props.tabIconNames[i]} // 图标
+						size={30}
+            color={color}/>
+					<Text style={{color: color}}>
+						{this.props.tabNames[i]} 
 					</Text>
 				</View>
 			</TouchableOpacity>
