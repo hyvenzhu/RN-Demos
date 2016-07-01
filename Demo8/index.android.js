@@ -93,6 +93,20 @@ class Demo8 extends Component {
 				),
 			]
 		).start(() => this.startAnimation()); // 循环执行动画
+
+		// 监听值的变化
+		this.state.rotateValue.addListener((state) => {
+			console.log("rotateValue=>" + state.value);
+		});
+
+		// ValueXY
+		this.state.translateValue.addListener((value) => {
+			console.log("translateValue=>x:" + value.x + " y:" + value.y);
+		});
+
+		this.state.fadeOutOpacity.addListener((state) => {
+			console.log("fadeOutOpacity=>" + state.value);
+		});
 	}
 	
 	componentDidMount() {
