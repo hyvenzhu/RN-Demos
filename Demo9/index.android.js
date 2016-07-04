@@ -5,7 +5,7 @@
  */
 
 import React, {Component} from "react";
-import {AppRegistry, StyleSheet, Text, View, LayoutAnimation, TouchableOpacity, Image} from "react-native";
+import {AppRegistry, StyleSheet, Text, View, LayoutAnimation, TouchableOpacity, Image, UIManager, Platform} from "react-native";
 
 class Demo9 extends Component {
 	// 构造
@@ -16,15 +16,65 @@ class Demo9 extends Component {
 			width: 100,
 			height: 100
 		};
+
+		if (Platform.OS === 'android') {
+			UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+		}
+
+		this.startAnimation();
 	}
 
-	onPress() {
-		// LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+	startAnimation() {
+		var count = 0;
+		// while(++count < 50)
+		// {
+		// 	requestAnimationFrame(() => {
+		// 		this.setState({width: this.state.width + 1, height: this.state.height + 1});
+		// 	});
+		// }
+
+		// while(++count < 50)
+		// {
+		// 	requestAnimationFrame(() => {
+		// 		this.refs.image.setNativeProps({
+		// 			style: {
+		// 				width: this.state.width++,
+		// 				height: this.state.height++
+		// 			}
+		// 		});
+		// 	});
+		// }
+
+		/**
+		 系统提供的动画
+		 easeInEaseOut: LayoutAnimationConfig
+		 linear:LayoutAnimationConfig
+		 spring: LayoutAnimationConfig
+		 */
+		LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+
+		// LayoutAnimation.configureNext(LayoutAnimation.create(700, LayoutAnimation.Types.spring, LayoutAnimation.Properties.scaleXY));
+
+		// 自定义动画参数
 		LayoutAnimation.configureNext({
-			duration: 7000,   //持续时间
-			update: {
-				type: 'linear',
-				property: 'opacity'
+			duration: 700,   //持续时间
+			create: { // 视图创建
+				/**
+				 spring
+				 linear
+				 easeInEaseOut
+				 easeIn
+				 easeOut
+				 */
+				type: LayoutAnimation.Types.linear,
+				property: LayoutAnimation.Properties.scaleXY, // opacity、scaleXY
+
+			},
+			update: { // 视图更新
+				initialVelocity: 10,
+				delay: 1000,
+				type: LayoutAnimation.Types.spring,
+				springDamping: 0.4
 			},
 		});
 		this.setState({width: this.state.width + 10, height: this.state.height + 10});
@@ -33,9 +83,9 @@ class Demo9 extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Image source={require('./icon.jpg')} style={{width: this.state.width, height: this.state.height}}/>
+				<Image ref='image' source={require('./icon.jpg')} style={{width: this.state.width, height: this.state.height}}/>
 
-				<TouchableOpacity style={styles.instructions} onPress={()=>this.onPress()}>
+				<TouchableOpacity style={styles.instructions} onPress={()=>this.startAnimation()}>
 					<Text style={{alignSelf: 'center', color: '#FFFFFF'}}>
 						Press me!
 					</Text>
