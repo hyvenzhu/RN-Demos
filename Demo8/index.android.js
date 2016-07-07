@@ -114,7 +114,7 @@ class Demo8 extends Component {
 			console.log("fadeOutOpacity=>" + state.value);
 		});
 	}
-	
+
 	componentDidMount() {
 		this.startAnimation();
 	}
