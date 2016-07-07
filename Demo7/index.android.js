@@ -18,12 +18,12 @@ import WeixinTabBar from './WeixinTabBar';
 class Demo7 extends Component {
 
 	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	tabNames: ['Tab1', 'Tab2', 'Tab3', 'Tab4'],
-	  	tabIconNames: ['ios-paper', 'ios-albums', 'ios-paper-plane', 'ios-person-add'],
-	  };
+		super(props);
+
+		this.state = {
+			tabNames: ['Tab1', 'Tab2', 'Tab3', 'Tab4'],
+			tabIconNames: ['ios-paper', 'ios-albums', 'ios-paper-plane', 'ios-person-add'],
+		};
 	}
 
 	render() {
@@ -41,7 +41,7 @@ class Demo7 extends Component {
 				<View style={styles.content} tabLabel='key2'>
 					<Text>#2</Text>
 				</View>
-				
+
 				<View style={styles.content} tabLabel='key3'>
 					<Text>#3</Text>
 				</View>

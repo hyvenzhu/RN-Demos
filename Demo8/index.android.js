@@ -9,7 +9,8 @@ import {
 	AppRegistry,
 	StyleSheet,
 	Animated,
-	Easing
+	Easing,
+	Image
 } from 'react-native';
 
 class Demo8 extends Component {
@@ -27,11 +28,12 @@ class Demo8 extends Component {
 
 	render() {
 		return (
-			<Animated.Image                         // 可选的基本组件类型: Image, Text, View
-				source={{uri: 'http://i.imgur.com/XMKOH81.jpg'}}
+			<Animated.View                         // 可选的基本组件类型: Image, Text, View(可以包裹任意子View)
 				style={{
 		          flex: 1,
-		          transform: [  // scale(2D), scaleX, scaleY, translateX, translateY, rotate(2D), rotateX, rotateY, rotateZ
+		          alignItems: 'center',
+		          justifyContent: 'center',
+		          transform: [  // scale, scaleX, scaleY, translateX, translateY, rotate, rotateX, rotateY, rotateZ
 		            {scale: this.state.bounceValue},  // 缩放
 		            {rotate: this.state.rotateValue.interpolate({ // 旋转，使用插值函数做值映射
 		                    inputRange: [0, 1],
@@ -41,10 +43,14 @@ class Demo8 extends Component {
 		            {translateX: this.state.translateValue.x}, // x轴移动
 		            {translateY: this.state.translateValue.y}, // y轴移动
 		          ],
-		          opacity: this.state.fadeOutOpacity, // 透明度,
-		        }}
-			/>
-		);
+		          opacity: this.state.fadeOutOpacity, // 透明度
+		        }}>
+			    <Image
+				    source={{uri: 'http://i.imgur.com/XMKOH81.jpg'}}
+					style={{width: 400, height: 400}}
+			    />
+			</Animated.View>
+	);
 	}
 
 	startAnimation(){
