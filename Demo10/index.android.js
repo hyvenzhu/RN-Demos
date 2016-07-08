@@ -13,12 +13,10 @@ import FirstPage from './FirstPage';
 
 class Demo10 extends Component {
 	render() {
-		let defaultName = 'FirstPage';
-		let defaultComponent = FirstPage;
 		return (
 			<Navigator
 				style={{flex: 1}}
-				initialRoute={{name: defaultName, component: defaultComponent}}
+				initialRoute={{id: 'FirstPage', component: FirstPage}}
 				configureScene={this.configureScene}
 				renderScene={this.renderScene}
 			/>
