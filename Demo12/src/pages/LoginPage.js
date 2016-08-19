@@ -17,10 +17,14 @@ class LoginPage extends Component {
 
   shouldComponentUpdate(nextProps, nextState)
   {
-    if (nextProps.isSuccess) {
-      this.props.navigator.push({
+    // 登陆完成，且成功登陆
+    if (nextProps.status === 'done' && nextProps.isSuccess) {
+      this.props.navigator.replace({
         id: 'MainPage',
-        component: MainPage
+        component: MainPage,
+        passProps: {
+           user: nextProps.user
+        },
       });
       return false;
     }
@@ -28,9 +32,18 @@ class LoginPage extends Component {
   }
 
   render() {
+    let tips;
+    if (this.props.status === 'init')
+    {
+      tips = '请点击登陆';
+    }
+    else if (this.props.status === 'doing')
+    {
+      tips = '正在登陆...';
+    }
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
-        <Text>{'loading:' + this.props.loading + '\nisSuccess:' + this.props.isSuccess}</Text>
+        <Text>{tips}</Text>
         <TouchableOpacity style={{backgroundColor: '#FF0000'}} onPress={this.handleLogin.bind(this)}>
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 100, height: 50}}>
             <Text style={{color: '#FFFFFF', fontSize: 20}}>登录</Text>
@@ -49,8 +62,9 @@ class LoginPage extends Component {
 function select(store)
 {
   return {
-    loading: store.loginIn.loading,
-    isSuccess: store.loginIn.isSuccess
+    status: store.loginIn.status,
+    isSuccess: store.loginIn.isSuccess,
+    user: store.loginIn.user
   }
 }
 

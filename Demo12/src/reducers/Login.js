@@ -3,20 +3,30 @@
 import * as types from '../constants/ActionTypes';
 
 const initialState = {
-  loading: false,
+  status: 'init',
   isSuccess: false,
+  user: null,
 }
 
 export default function loginIn(state = initialState, action) {
   switch (action.type) {
-    case types.LOGIN_IN:
+    case types.LOGIN_IN_INIT:
       return Object.assign({}, state, {
-        loading: true
+        status: 'init',
+        isSuccess: false,
+        user: null
       });
-    case types.LOGIN_IN_COMPLETED:
+    case types.LOGIN_IN_DOING:
       return Object.assign({}, state, {
-        loading: false,
-        isSuccess: action.isSuccess
+        status: 'doing',
+        isSuccess: false,
+        user: null
+      });
+    case types.LOGIN_IN_DONE:
+      return Object.assign({}, state, {
+        status: 'done',
+        isSuccess: action.isSuccess,
+        user: action.user
       })
     default:
       return state;

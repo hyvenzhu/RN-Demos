@@ -10,8 +10,8 @@ import {
 export default class MainPage extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>登陆成功，欢迎使用</Text>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
+        <Text>{'姓名:' + this.props.user.name + '\n年龄:' + this.props.user.age}</Text>
       </View>
     );
   }
