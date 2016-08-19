@@ -17,7 +17,7 @@ class LoginPage extends Component {
 
   shouldComponentUpdate(nextProps, nextState)
   {
-    // 登陆完成，且成功登陆
+    // 登录完成，且成功登录
     if (nextProps.status === 'done' && nextProps.isSuccess) {
       this.props.navigator.replace({
         id: 'MainPage',
@@ -35,11 +35,15 @@ class LoginPage extends Component {
     let tips;
     if (this.props.status === 'init')
     {
-      tips = '请点击登陆';
+      tips = '请点击登录';
     }
     else if (this.props.status === 'doing')
     {
-      tips = '正在登陆...';
+      tips = '正在登录...';
+    }
+    else if (this.props.status === 'done' && !this.props.isSuccess)
+    {
+      tips = '登录失败, 请重新登录';
     }
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
